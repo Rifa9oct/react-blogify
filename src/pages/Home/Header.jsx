@@ -1,13 +1,15 @@
 import logo from "./../../assets/logo.svg"
 import search from "./../../assets/icons/search.svg"
+import { Link } from "react-router-dom";
+import Logout from "../../components/auth/Logout";
 
 const Header = () => {
     return (
         <nav className="container">
             <div>
-                <a href="./index.html">
+                <Link to="/">
                     <img className="w-32" src={logo} alt="logo" />
-                </a>
+                </Link>
             </div>
             <div>
                 <ul className="flex items-center space-x-5">
@@ -17,23 +19,29 @@ const Header = () => {
                             Write
                         </a>
                     </li>
-                    <li>
+                    
+                    {/* search */}
+                    {/* <li>
                         <a href="./search.html" className="flex items-center gap-2 cursor-pointer">
                             <img src={search} alt="Search" />
                             <span>Search</span>
                         </a>
-                    </li>
+                    </li> */}
+
                     <li>
-                        <a href="./login.html" className="text-white/50 hover:text-white transition-all duration-200">
+                        <Link to="/login" className="text-white/50 hover:text-white transition-all duration-200">
                             Login
-                        </a>
+                        </Link>
                     </li>
-                    <li className="flex items-center">
+                    <li><Logout/></li>
+
+                    {/* profile  */}
+                    {/* <li className="flex items-center">
                         <div className="avater-img bg-orange-600 text-white">
                             <span className="">S</span>
                         </div>
                         <a href="./profile.html"><span className="text-white ml-2">Saad Hasan</span></a>
-                    </li>
+                    </li> */}
                 </ul>
             </div>
         </nav>
