@@ -2,17 +2,37 @@ import { useForm } from "react-hook-form";
 import { MdError } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "./Home/Footer";
-
+import { useAuth } from "../hooks/useAuth";
+import axios from "axios";
 
 const Login = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { setAuth } = useAuth()
+    const { register, handleSubmit, formState: { errors }, setError } = useForm();
     const navigate = useNavigate();
 
-    const onSubmit = (data) => {
-        const email = data.email;
-        const password = data.password;
-        navigate("/");
-        console.log(email, password)
+    const onSubmit = async (data) => {
+        try {
+            const res = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}/auth/login`, data);
+
+            if (res.status === 200) {
+                const { user, token } = res.data;
+                if (token) {
+                    const authToken = token.accessToken;
+                    const refreshToken = token.refreshToken;
+
+                    console.log(`Login time auth token: ${authToken}`);
+
+                    setAuth({ user, authToken, refreshToken });
+                    navigate("/");
+                }
+            }
+        } catch (error) {
+            console.error(error);
+            setError("root.random", {
+                type: "random",
+                message: `User with email ${data.email} is not found`,
+            })
+        }
     }
 
     return (
@@ -43,6 +63,9 @@ const Login = () => {
                             {errors.password?.type === "required" && <p className="text-sm text-red-500"><MdError className="text-lg inline" /> Password is required.</p>}
                             {errors.password?.type === "minLength" && <p className="text-sm text-red-500"><MdError className="text-lg inline" /> Password must be 8 characters.</p>}
                         </div>
+                        
+                        <p className="text-red-500 mb-2">{errors?.root?.random?.message}</p>
+
                         <div className="mb-6">
                             <button
                                 type="submit"
@@ -51,7 +74,7 @@ const Login = () => {
                                 Login
                             </button>
                         </div>
-                        
+
                         <p className="text-center">
                             Don't have an account? <Link to="/register" className="text-indigo-600 hover:underline">Register</Link>
                         </p>
