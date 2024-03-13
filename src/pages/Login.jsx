@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Footer from "./Home/Footer";
 import { useAuth } from "../hooks/useAuth";
 import axios from "axios";
+import Header from "./Home/Header";
 
 const Login = () => {
     const { setAuth } = useAuth()
@@ -37,6 +38,7 @@ const Login = () => {
 
     return (
         <>
+            <Header></Header>
             <div className="container">
                 <div className="w-full md:w-1/2 mx-auto bg-[#030317] p-8 rounded-md mt-12">
                     <h2 className="text-2xl font-bold mb-6">Login</h2>
@@ -63,7 +65,7 @@ const Login = () => {
                             {errors.password?.type === "required" && <p className="text-sm text-red-500"><MdError className="text-lg inline" /> Password is required.</p>}
                             {errors.password?.type === "minLength" && <p className="text-sm text-red-500"><MdError className="text-lg inline" /> Password must be 8 characters.</p>}
                         </div>
-                        
+
                         <p className="text-red-500 mb-2">{errors?.root?.random?.message}</p>
 
                         <div className="mb-6">

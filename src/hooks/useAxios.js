@@ -40,8 +40,7 @@ const useAxios = () => {
             originalRequest.headers.Authorization = `Bearer ${accessToken}`;
             return axios(originalRequest);
           } catch (error) {
-            // throw error
-            console.log(error);
+            console.error(error);
           }
         }
         return Promise.reject(error);
