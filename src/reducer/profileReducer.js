@@ -37,6 +37,20 @@ const profileReducer = (state, action) => {
                 blogs: action.data?.blogs,
             };
         }
+        case actions.profile.User_Data_Edited: {
+            return {
+                ...state,
+                loading: false,
+                user: {
+                    id: action.data?.id,
+                    email: action.data?.email,
+                    firstName: action.data?.firstName,
+                    lastName: action.data?.lastName,
+                    avatar: action.data?.avatar,
+                    bio: action.data?.bio
+                }
+            };
+        }
         case actions.profile.Data_Fetch_Error: {
             return {
                 ...state,

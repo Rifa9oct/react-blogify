@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-// import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth";
 import useAxios from "../hooks/useAxios";
 import { useProfile } from "../hooks/useProfile";
 import { actions } from "../actions";
@@ -8,7 +8,7 @@ import ProfileInfo from "../components/profile/ProfileInfo";
 const Profile = () => {
     const { state, dispatch } = useProfile();
     const { api } = useAxios();
-    // const { auth } = useAuth();
+    const { auth } = useAuth();
 
     //id = ${auth?.user?.id}
     useEffect(() => {
@@ -16,7 +16,7 @@ const Profile = () => {
 
         const fetchProfile = async () => {
             try {
-                const response = await api.get(`${import.meta.env.VITE_SERVER_BASE_URL}/profile/3d2dde4b6548275fb066`);
+                const response = await api.get(`${import.meta.env.VITE_SERVER_BASE_URL}/profile/${auth?.user?.id}`);
 
                 if (response.status === 200) {
                     dispatch({ type: actions.profile.Data_Fetched, data: response.data })
@@ -27,7 +27,7 @@ const Profile = () => {
             }
         }
         fetchProfile();
-    }, [api, dispatch]);
+    }, [api, dispatch, auth?.user?.id]);
 
     if (state?.loading) {
         return <p>Fetching your profile data...</p>
