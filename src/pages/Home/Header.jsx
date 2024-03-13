@@ -8,7 +8,6 @@ const Header = () => {
     const { auth } = useAuth();
     const firstLetter = auth.user?.firstName.slice(0, 1);
 
-
     return (
         <nav className="container">
             <div>
@@ -26,7 +25,7 @@ const Header = () => {
                     </li>
 
                     {
-                        auth.user ? (
+                        auth.authToken ? (
                             <>
                                 {/* search */}
                                 <li>
