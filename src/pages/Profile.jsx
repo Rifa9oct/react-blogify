@@ -10,7 +10,6 @@ const Profile = () => {
     const { api } = useAxios();
     const { auth } = useAuth();
 
-    //id = ${auth?.user?.id}
     useEffect(() => {
         dispatch({ type: actions.profile.Data_Fetching });
 

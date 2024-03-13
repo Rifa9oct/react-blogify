@@ -42,15 +42,22 @@ const profileReducer = (state, action) => {
                 ...state,
                 loading: false,
                 user: {
-                    id: action.data?.id,
-                    email: action.data?.email,
-                    firstName: action.data?.firstName,
-                    lastName: action.data?.lastName,
-                    avatar: action.data?.avatar,
+                    ...state.user,
                     bio: action.data?.bio
                 }
             };
         }
+        case actions.profile.IMAGE_UPDATED: {
+            return {
+                ...state,
+                loading: false,
+                user: {
+                    ...state.user,
+                    avatar: action.data.avatar,
+                },
+            };
+        }
+
         case actions.profile.Data_Fetch_Error: {
             return {
                 ...state,
