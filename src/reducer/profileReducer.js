@@ -1,7 +1,14 @@
 import { actions } from "../actions";
 
 const initialState = {
-    user: null,
+    user: {
+        id: null,
+        email: null,
+        firstName: null,
+        lastName: null,
+        avatar: null,
+        bio: null
+    },
     blogs: [],
     loading: false,
     error: null,
@@ -19,8 +26,15 @@ const profileReducer = (state, action) => {
             return {
                 ...state,
                 loading: false,
-                user: action.data.firstName,
-                blogs: action.data.blogs,
+                user: {
+                    id: action.data?.id,
+                    email: action.data?.email,
+                    firstName: action.data?.firstName,
+                    lastName: action.data?.lastName,
+                    avatar: action.data?.avatar,
+                    bio: action.data?.bio
+                },
+                blogs: action.data?.blogs,
             };
         }
         case actions.profile.Data_Fetch_Error: {

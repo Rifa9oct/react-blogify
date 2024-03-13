@@ -24,15 +24,15 @@ const router = createBrowserRouter([
         path: "/profile",
         element: <PrivateRoute><Profile></Profile></PrivateRoute>
       },
+      {
+        path: "/login",
+        element: <Login></Login>
+      },
+      {
+        path: "/register",
+        element: <Register></Register>
+      },
     ]
-  },
-  {
-    path: "/login",
-    element: <Login></Login>
-  },
-  {
-    path: "/register",
-    element: <Register></Register>
   },
 ]);
 
