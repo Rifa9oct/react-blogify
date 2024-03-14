@@ -26,6 +26,10 @@ const Profile = () => {
             }
         }
         fetchProfile();
+
+        return () => {
+            dispatch({ type: actions.profile.Clear_Data });
+        };
     }, [api, dispatch, auth?.user?.id]);
 
     if (state?.loading) {
@@ -34,7 +38,7 @@ const Profile = () => {
 
     return (
         <div className="mx-auto max-w-[1020px] py-8">
-            <ProfileInfo/>
+            <ProfileInfo />
         </div>
     );
 };

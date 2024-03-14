@@ -8,8 +8,9 @@ import { useProfile } from "../../hooks/useProfile";
 const Header = () => {
     const { auth } = useAuth();
     const { state } = useProfile();
-    // console.log(state)
-    const firstLetter = auth.user?.firstName.slice(0, 1);
+
+    const avatarSrc = state?.user?.avatar ? `${import.meta.env.VITE_SERVER_BASE_URL}/uploads/avatar/${state?.user?.avatar}` : null;
+    const firstLetter = auth?.user?.firstName?.slice(0, 1);
 
     return (
         <header>
@@ -38,13 +39,20 @@ const Header = () => {
                                         </a>
                                     </li>
                                     <li><Logout /></li>
-                                    {/* <img className="w-10 h-10 rounded-full" src={`${import.meta.env.VITE_SERVER_BASE_URL}/uploads/avatar/${auth.user?.avatar}`} alt="" /> */}
 
                                     <li className="flex items-center">
-                                        <div className="avater-img bg-orange-600 text-white">
-                                            <span className="">{firstLetter}</span>
-                                        </div>
-                                        <Link to="/profile"><span className="text-white ml-2">{`${auth.user?.firstName} ${auth.user?.lastName}`}s</span></Link>
+                                        {
+                                            avatarSrc ? (
+                                                <img className="w-10 h-10 rounded-full"
+                                                    src={avatarSrc} alt="avatar" />
+                                            ) : (
+                                                <div className="avater-img bg-orange-600 text-white">
+                                                    <span className="">{firstLetter}</span>
+                                                </div>
+                                            )
+                                        }
+
+                                        <Link to="/profile"><span className="text-white ml-2">{auth?.user?.firstName} {auth?.user?.lastName}</span></Link>
                                     </li>
                                 </>
                             ) : (
@@ -58,7 +66,7 @@ const Header = () => {
                     </ul>
                 </div>
             </nav>
-        </header>
+        </header >
     );
 };
 

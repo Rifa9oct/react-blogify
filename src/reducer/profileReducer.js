@@ -47,7 +47,7 @@ const profileReducer = (state, action) => {
                 }
             };
         }
-        case actions.profile.IMAGE_UPDATED: {
+        case actions.profile.Image_Updated: {
             return {
                 ...state,
                 loading: false,

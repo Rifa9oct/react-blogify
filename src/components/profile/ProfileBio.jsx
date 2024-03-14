@@ -15,13 +15,13 @@ const ProfileBio = () => {
         dispatch({ type: actions.profile.Data_Fetching });
 
         try {
-            const response = await api.patch(
-                `${import.meta.env.VITE_SERVER_BASE_URL}/profile/${state?.user?.id}`, { bio });
+            const response = await api.patch("/profile", { bio });
             if (response.status === 200) {
                 dispatch({
                     type: actions.profile.User_Data_Edited,
                     data: response.data,
                 });
+                console.log("Bio update successfully");
             }
             setEditMode(false);
         } catch (error) {

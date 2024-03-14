@@ -3,9 +3,9 @@ import { initialState, profileReducer } from "../reducer/profileReducer";
 import { ProfileContext } from "../context";
 
 const ProfileProvider = ({children}) => {
-    const [state, dispatch] = useReducer(profileReducer, initialState)
+    const [state, dispatch] = useReducer(profileReducer, initialState);
     return (
-        <ProfileContext.Provider value={{state, dispatch}}>
+        <ProfileContext.Provider value={{state, dispatch }}>
             {children}
         </ProfileContext.Provider>
     );

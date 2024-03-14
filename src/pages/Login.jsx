@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import Footer from "./Home/Footer";
 import { useAuth } from "../hooks/useAuth";
 import axios from "axios";
-import Header from "./Home/Header";
 
 const Login = () => {
     const { setAuth } = useAuth()
