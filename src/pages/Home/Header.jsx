@@ -12,7 +12,7 @@ const Header = () => {
     
     const avatarSrc = user?.avatar ? `${import.meta.env.VITE_SERVER_BASE_URL}/uploads/avatar/${user?.avatar}` : null;
 
-    const firstLetter = auth?.user?.firstName?.slice(0, 1);
+    const firstLetter = user?.firstName?.slice(0, 1);
 
     return (
         <header>
@@ -54,7 +54,7 @@ const Header = () => {
                                             )
                                         }
 
-                                        <Link to="/profile"><span className="text-white ml-2">{auth?.user?.firstName} {auth?.user?.lastName}</span></Link>
+                                        <Link to="/profile"><span className="text-white ml-2">{user?.firstName} {user?.lastName}</span></Link>
                                     </li>
                                 </>
                             ) : (
