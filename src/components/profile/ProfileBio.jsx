@@ -4,6 +4,7 @@ import check from "../../assets/icons/check.svg";
 import { useProfile } from "../../hooks/useProfile";
 import useAxios from "../../hooks/useAxios";
 import { actions } from "../../actions";
+import { Bounce, toast } from "react-toastify";
 
 const ProfileBio = () => {
     const { state, dispatch } = useProfile();
@@ -13,15 +14,24 @@ const ProfileBio = () => {
 
     const handleBioEdit = async () => {
         dispatch({ type: actions.profile.Data_Fetching });
-
         try {
             const response = await api.patch("/profile", { bio });
             if (response.status === 200) {
                 dispatch({
                     type: actions.profile.User_Data_Edited,
-                    data: response.data,
+                    data: response.data.user,
                 });
-                console.log("Bio update successfully");
+                toast.success('Bio updated successfully!', {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    transition: Bounce,
+                    });
             }
             setEditMode(false);
         } catch (error) {
@@ -46,7 +56,7 @@ const ProfileBio = () => {
                         />
                     ) : (
                         <p className="leading-[188%] text-gray-400 lg:text-lg">
-                            {state?.user?.bio}
+                            {bio}
                         </p>
                     )}
                 </div>

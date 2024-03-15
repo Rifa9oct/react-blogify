@@ -1,14 +1,7 @@
 import { actions } from "../actions";
 
 const initialState = {
-    user: {
-        id: null,
-        email: null,
-        firstName: null,
-        lastName: null,
-        avatar: null,
-        bio: null
-    },
+    user: null,
     blogs: [],
     loading: false,
     error: null,
@@ -26,14 +19,7 @@ const profileReducer = (state, action) => {
             return {
                 ...state,
                 loading: false,
-                user: {
-                    id: action.data?.id,
-                    email: action.data?.email,
-                    firstName: action.data?.firstName,
-                    lastName: action.data?.lastName,
-                    avatar: action.data?.avatar,
-                    bio: action.data?.bio
-                },
+                user: action.data,
                 blogs: action.data?.blogs,
             };
         }
@@ -43,7 +29,7 @@ const profileReducer = (state, action) => {
                 loading: false,
                 user: {
                     ...state.user,
-                    bio: action.data?.bio
+                    bio: action.data.bio
                 }
             };
         }
@@ -53,8 +39,8 @@ const profileReducer = (state, action) => {
                 loading: false,
                 user: {
                     ...state.user,
-                    avatar: action.data.avatar,
-                },
+                    avatar: action.data.avatar
+                }
             };
         }
 

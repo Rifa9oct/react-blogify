@@ -4,14 +4,21 @@ import edit from "../../assets/icons/edit.svg"
 import { useAuth } from "../../hooks/useAuth";
 import useAxios from "../../hooks/useAxios";
 import { useProfile } from "../../hooks/useProfile";
+import { Bounce, toast } from "react-toastify";
 
 const ProfileImage = () => {
     const { auth } = useAuth();
     const { state } = useProfile();
+
     const firstLetter = auth.user?.firstName.slice(0, 1);
     const { dispatch } = useProfile();
     const { api } = useAxios();
-    const avatarSrc = state?.user?.avatar ? `${import.meta.env.VITE_SERVER_BASE_URL}/uploads/avatar/${state?.user?.avatar}` : null;
+
+    let avatarSrc = auth?.user?.avatar ? `${import.meta.env.VITE_SERVER_BASE_URL}/uploads/avatar/${auth?.user?.avatar}` : null;
+    if (state?.user) {
+        avatarSrc = state?.user?.avatar ? `${import.meta.env.VITE_SERVER_BASE_URL}/uploads/avatar/${state?.user?.avatar}` : null;
+    }
+
     const fileUploaderRef = useRef();
 
     const handleImageUpload = (event) => {
@@ -27,14 +34,23 @@ const ProfileImage = () => {
             for (const file of fileUploaderRef.current.files) {
                 formData.append("avatar", file);
             }
-
             const response = await api.post(`/profile/avatar`, formData);
             if (response.status === 200) {
                 dispatch({
                     type: actions.profile.Image_Updated,
-                    data: response.data,
+                    data: response.data.user,
                 });
-                console.log("image uploded successfully");
+                toast.success('Image uploded successfully', {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    transition: Bounce,
+                    });
             }
         } catch (error) {
             dispatch({

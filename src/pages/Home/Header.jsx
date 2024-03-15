@@ -8,8 +8,10 @@ import { useProfile } from "../../hooks/useProfile";
 const Header = () => {
     const { auth } = useAuth();
     const { state } = useProfile();
+    const user = state?.user ?? auth?.user
+    
+    const avatarSrc = user?.avatar ? `${import.meta.env.VITE_SERVER_BASE_URL}/uploads/avatar/${user?.avatar}` : null;
 
-    const avatarSrc = state?.user?.avatar ? `${import.meta.env.VITE_SERVER_BASE_URL}/uploads/avatar/${state?.user?.avatar}` : null;
     const firstLetter = auth?.user?.firstName?.slice(0, 1);
 
     return (
