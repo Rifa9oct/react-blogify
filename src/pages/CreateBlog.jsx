@@ -1,8 +1,9 @@
 
+
 const CreateBlog = () => {
     return (
         <div>
-            <h1>Create Blog</h1>
+           <h1>create blogs</h1> 
         </div>
     );
 };

@@ -3,6 +3,7 @@ import RegistrationFooter from "../components/RegistrationFooter";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { MdError } from "react-icons/md";
+import { Bounce, toast } from "react-toastify";
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors }, setError } = useForm();
@@ -13,7 +14,17 @@ const Register = () => {
             const res = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}/auth/register`, data);
 
             if (res.status === 201) {
-                console.log(res.data)
+                toast.success('Register successfully!', {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    transition: Bounce,
+                    });
                 navigate("/login");
             }
         } catch (error) {

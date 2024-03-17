@@ -1,5 +1,4 @@
 import { useProfile } from "../../hooks/useProfile";
-import MyBlogs from "./MyBlogs";
 import ProfileBio from "./ProfileBio";
 import ProfileImage from "./ProfileImage";
 
@@ -16,7 +15,6 @@ const ProfileInfo = () => {
                 <ProfileBio />
             </div>
             <h4 className="mt-6 text-xl lg:mt-8 lg:text-2xl">Your Blogs</h4>
-            <MyBlogs/>
         </div>
     );
 };
