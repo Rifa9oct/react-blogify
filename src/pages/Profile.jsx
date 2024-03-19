@@ -4,7 +4,8 @@ import useAxios from "../hooks/useAxios";
 import { useProfile } from "../hooks/useProfile";
 import { actions } from "../actions";
 import ProfileInfo from "../components/profile/ProfileInfo";
-import MyBlogs from "../components/profile/MyBlogs";
+import MyBlogs from "../components/blog/MyBlogs";
+
 
 const Profile = () => {
     const { state, dispatch } = useProfile();
@@ -36,6 +37,7 @@ const Profile = () => {
     if (state?.loading) {
         return <p>Fetching your profile data...</p>
     }
+    
     return (
         <div className="mx-auto max-w-[1020px] py-8">
             <ProfileInfo />

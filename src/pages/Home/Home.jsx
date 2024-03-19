@@ -1,9 +1,11 @@
 import Footer from "./Footer";
+import BlogContents from "./BlogContents";
 
 const Home = () => {
     return (
         <div>
-            <Footer></Footer>
+            <BlogContents/>
+            <Footer/>
         </div>
     );
 };

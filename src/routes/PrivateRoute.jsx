@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ children }) => {
     const { auth } = useAuth();
-    if (auth.authToken) {
+    if (auth?.authToken) {
         return children;
     }
 
