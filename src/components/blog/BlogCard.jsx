@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { useAvatar } from "../../hooks/useAvatar";
 import { formatDate } from "../../utils/formatDate";
@@ -11,7 +12,7 @@ const BlogCard = ({ blog }) => {
     const isMe = blog?.author?.id === auth?.user?.id;
 
     return (
-        <div className="blog-card">
+        <Link to={`/singleBlog/${blog.id}`} className="blog-card">
             <img className="blog-thumb" src={`${import.meta.env.VITE_SERVER_BASE_URL}/uploads/blog/${blog.thumbnail}`} alt="" />
             <div className="mt-2 relative">
                 <h3 className="text-slate-300 text-xl lg:text-2xl">{blog.title}</h3>
@@ -54,7 +55,7 @@ const BlogCard = ({ blog }) => {
                     )
                 }
             </div>
-        </div>
+        </Link>
     );
 };
 

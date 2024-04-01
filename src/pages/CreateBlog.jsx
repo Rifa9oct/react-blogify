@@ -1,27 +1,43 @@
 import { useForm } from "react-hook-form";
 import { MdError } from "react-icons/md";
 import Footer from "./Home/Footer";
-import { api } from "../api";
+import useAxios from "../hooks/useAxios";
+import { Bounce, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const CreateBlog = () => {
-    const { register, handleSubmit, formState: { errors }} = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { api } = useAxios();
+    const navigate = useNavigate()
 
     const onSubmit = async (data) => {
         try {
             const formData = new FormData();
             formData.append("title", data.title);
             formData.append("content", data.content);
-            
+
             const tagsArray = data.tags.split(",").map(tag => tag.trim());
             formData.append("tags", JSON.stringify(tagsArray));
 
             for (const file of data.thumbnail) {
                 formData.append("thumbnail", file);
             }
-           
+
             const response = await api.post(`/blogs/`, formData);
-            if (response.status === 200){
+            if (response.status === 201) {
                 console.log(response.data)
+                toast.success('Your blog created successfully!', {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    transition: Bounce,
+                });
+                navigate(`/singleBlog/${response.data.blog.id}`)
             }
         } catch (error) {
             console.error(error)
@@ -49,7 +65,7 @@ const CreateBlog = () => {
                             </svg>
                             <p>Upload Your Image</p>
                         </label>
-                        <input id="file" type="file" 
+                        <input id="file" type="file"
                             name="thumbnail"
                             hidden
                             {...register("thumbnail", { required: true })}
