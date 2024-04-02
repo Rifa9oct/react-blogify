@@ -15,9 +15,7 @@ const CreateBlog = () => {
             const formData = new FormData();
             formData.append("title", data.title);
             formData.append("content", data.content);
-
-            const tagsArray = data.tags.split(",").map(tag => tag.trim());
-            formData.append("tags", JSON.stringify(tagsArray));
+            formData.append("tags", data.tags);
 
             for (const file of data.thumbnail) {
                 formData.append("thumbnail", file);

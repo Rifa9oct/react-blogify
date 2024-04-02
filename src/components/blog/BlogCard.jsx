@@ -5,20 +5,30 @@ import { formatDate } from "../../utils/formatDate";
 import BlogAction from "./BlogAction";
 
 const BlogCard = ({ blog }) => {
-    const {auth} = useAuth();
+    const { auth } = useAuth();
     const { avatarURL } = useAvatar(blog);
     const avatarSrc = avatarURL ? avatarURL : null
     const firstLetter = blog.author.firstName.slice(0, 1);
     const isMe = blog?.author?.id === auth?.user?.id;
 
     return (
-        <Link to={`/singleBlog/${blog.id}`} className="blog-card">
-            <img className="blog-thumb" src={`${import.meta.env.VITE_SERVER_BASE_URL}/uploads/blog/${blog.thumbnail}`} alt="" />
+        <div className="blog-card">
+            <Link to={`/singleBlog/${blog.id}`}>
+                <img className="blog-thumb" src={`${import.meta.env.VITE_SERVER_BASE_URL}/uploads/blog/${blog.thumbnail}`} alt="" />
+            </Link>
+
             <div className="mt-2 relative">
-                <h3 className="text-slate-300 text-xl lg:text-2xl">{blog.title}</h3>
-                <p className="mb-6 text-base text-slate-500 mt-1">
-                    {blog.content}
-                </p>
+                <Link to={`/singleBlog/${blog.id}`}>
+                    <h3 className="text-slate-300 text-xl lg:text-2xl">{blog.title}</h3>
+                </Link>
+                
+                <Link to={`/singleBlog/${blog.id}`}>
+                    <p className="mb-6 text-base text-slate-500 mt-1">
+                        {blog.content}
+                    </p>
+                </Link>
+
+
 
                 {/* Meta Informations */}
                 <div className="flex justify-between items-center">
@@ -55,7 +65,7 @@ const BlogCard = ({ blog }) => {
                     )
                 }
             </div>
-        </Link>
+        </div>
     );
 };
 
