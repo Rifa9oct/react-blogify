@@ -1,7 +1,9 @@
+import useAxios from "../hooks/useAxios";
 
 const Comments = ({ singleBlog, refetch }) => {
-    // console.log(singleBlog);
-
+    const { api } = useAxios();
+        // console.log(singleBlog);
+        
     return (
         <div className="mx-auto w-full md:w-10/12 container">
             <h2 className="text-3xl font-bold my-8">Comments (3)</h2>
