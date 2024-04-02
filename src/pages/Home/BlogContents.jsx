@@ -9,6 +9,7 @@ const BlogContents = () => {
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const loaderRef = useRef(null);
+    // console.log(state)
 
     useEffect(() => {
         const fetchblogs = async () => {
@@ -49,23 +50,23 @@ const BlogContents = () => {
     }, [hasMore, page]);
 
     return (
-        <div className="container">
-            <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
-                <div className="space-y-3 md:col-span-5">
-                    {
-                        state?.blogs.map(blog => <BlogCard key={blog.id} blog={blog} />)
-                    }
-                </div>
+        <>
+            <div className="space-y-3 md:col-span-5">
+                {
+                    state?.blogs.map(blog => <BlogCard key={blog.id} blog={blog} />)
+                }
+
+                {
+                    hasMore ? (
+                        <div ref={loaderRef} className="text-center text-2xl py-10">Loading more blogs...</div>
+                    ) : (
+                        <div className="text-center text-2xl py-10">All blogs have been loaded. There are no more blogs.</div>
+                    )
+                }
             </div>
 
-            {
-                hasMore ? (
-                    <div ref={loaderRef} className="text-center text-2xl my-10">Loading more blogs...</div>
-                ) : (
-                    <div className="text-center text-2xl my-10">All blogs have been loaded. There are no more blogs.</div>
-                )
-            }
-        </div>
+
+        </>
     );
 };
 
