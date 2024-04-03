@@ -21,14 +21,12 @@ const BlogCard = ({ blog }) => {
                 <Link to={`/singleBlog/${blog.id}`}>
                     <h3 className="text-slate-300 text-xl lg:text-2xl">{blog.title}</h3>
                 </Link>
-                
+
                 <Link to={`/singleBlog/${blog.id}`}>
                     <p className="mb-6 text-base text-slate-500 mt-1">
                         {blog.content}
                     </p>
                 </Link>
-
-
 
                 {/* Meta Informations */}
                 <div className="flex justify-between items-center">
@@ -44,7 +42,7 @@ const BlogCard = ({ blog }) => {
                         </div>
 
                         <div>
-                            <h5 className="text-slate-500 text-sm">{blog.author.firstName} {blog.author.lastName}</h5>
+                            <Link to={`/profile/${blog?.author?.id}`} className="text-slate-500 text-sm">{blog.author.firstName} {blog.author.lastName}</Link>
                             <div className="flex items-center text-xs text-slate-700">
                                 <span>{formatDate(blog.createdAt)}</span>
                             </div>

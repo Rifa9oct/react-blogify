@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Footer from "./Home/Footer";
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../hooks/useAxios";
@@ -24,6 +24,10 @@ const SingleBlog = () => {
         }
     })
 
+    const avatarSrc = singleBlog?.author?.avatar ? `${import.meta.env.VITE_SERVER_BASE_URL}/uploads/avatar/${singleBlog?.author?.avatar}` : null;
+
+    const firstLetter = singleBlog?.author?.firstName?.slice(0, 1);
+
     return (
         <>
             <div>
@@ -31,10 +35,18 @@ const SingleBlog = () => {
                     <h1 className="font-bold text-3xl md:text-5xl">{singleBlog?.title}</h1>
                     <div className="flex justify-center items-center my-4 gap-4">
                         <div className="flex items-center capitalize space-x-2">
-                            <div className="avater-img bg-indigo-600 text-white">
-                                <span className="">S</span>
-                            </div>
-                            <h5 className="text-slate-500 text-sm">{singleBlog?.author?.firstName} {singleBlog?.author?.lastName}</h5>
+                            {
+                                avatarSrc ? (
+                                    <img className="w-10 h-10 rounded-full"
+                                        src={avatarSrc} alt="avatar" />
+                                ) : (
+                                    <div className="avater-img bg-orange-600 text-white">
+                                        <span className="">{firstLetter}</span>
+                                    </div>
+                                )
+                            }
+
+                            <Link to={`/profile/${singleBlog?.author?.id}`} className="text-slate-500 text-sm">{singleBlog?.author?.firstName} {singleBlog?.author?.lastName}</Link>
                         </div>
                         <span className="text-sm text-slate-700 dot">{formatDate(singleBlog?.createdAt)}</span>
                         <span className="text-sm text-slate-700 dot">{singleBlog?.likes.length} Likes</span>
@@ -59,7 +71,7 @@ const SingleBlog = () => {
                 <Comments singleBlog={singleBlog} refetch={refetch} />
             </div>
 
-            <SingleBlogAction singleBlog={singleBlog} refetch={refetch}/>
+            <SingleBlogAction singleBlog={singleBlog} refetch={refetch} />
             <Footer />
         </>
     );

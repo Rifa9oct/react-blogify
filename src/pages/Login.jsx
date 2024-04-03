@@ -1,14 +1,16 @@
 import { useForm } from "react-hook-form";
 import { MdError } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Footer from "./Home/Footer";
 import { useAuth } from "../hooks/useAuth";
 import axios from "axios";
 
 const Login = () => {
-    const { setAuth } = useAuth()
-    const { register, handleSubmit, formState: { errors }, setError } = useForm();
+    const { setAuth } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+    const { register, handleSubmit, formState: { errors }, setError } = useForm();
+   
 
     const onSubmit = async (data) => {
         try {
@@ -22,7 +24,7 @@ const Login = () => {
 
                     // console.log(`Login time auth token: ${authToken}`);
                     setAuth({ user, authToken, refreshToken });
-                    navigate("/");
+                    navigate(location?.state ? location.state : "/")
                 }
             }
         } catch (error) {

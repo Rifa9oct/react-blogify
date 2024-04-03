@@ -33,7 +33,7 @@ const PopularSidebar = () => {
                             </Link>
                             <p className="text-slate-600 text-sm">
                                 by
-                                <a href="./profile.html">{blog.author.firstName} {blog.author.lastName}</a>
+                                <Link to={`/profile/${blog?.author?.id}`}>{blog.author.firstName} {blog.author.lastName}</Link>
                                 <span>·</span> {blog.likes.length} Likes
                             </p>
                         </li>

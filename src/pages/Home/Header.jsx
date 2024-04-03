@@ -54,7 +54,7 @@ const Header = () => {
                                             )
                                         }
 
-                                        <Link to="/profile"><span className="text-white ml-2">{user?.firstName} {user?.lastName}</span></Link>
+                                        <Link to={`/profile/${user?.id}`}><span className="text-white ml-2">{user?.firstName} {user?.lastName}</span></Link>
                                     </li>
                                 </>
                             ) : (

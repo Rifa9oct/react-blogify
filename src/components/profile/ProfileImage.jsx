@@ -4,7 +4,6 @@ import edit from "../../assets/icons/edit.svg"
 import { useAuth } from "../../hooks/useAuth";
 import useAxios from "../../hooks/useAxios";
 import { useProfile } from "../../hooks/useProfile";
-import { Bounce, toast } from "react-toastify";
 
 const ProfileImage = () => {
     const { auth } = useAuth();
@@ -40,17 +39,6 @@ const ProfileImage = () => {
                     type: actions.profile.Image_Updated,
                     data: response.data.user,
                 });
-                toast.success('Image uploded successfully', {
-                    position: "top-center",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                    transition: Bounce,
-                    });
             }
         } catch (error) {
             dispatch({

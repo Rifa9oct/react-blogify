@@ -26,8 +26,8 @@ const router = createBrowserRouter([
         element: <SingleBlog></SingleBlog>,
       },
       {
-        path: "/profile",
-        element: <PrivateRoute><Profile></Profile></PrivateRoute>
+        path: "/profile/:id",
+        element: <Profile></Profile>
       },
       {
         path: "/login",

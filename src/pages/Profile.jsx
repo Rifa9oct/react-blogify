@@ -1,23 +1,21 @@
 import { useEffect } from "react";
-import { useAuth } from "../hooks/useAuth";
-import useAxios from "../hooks/useAxios";
 import { useProfile } from "../hooks/useProfile";
 import { actions } from "../actions";
 import ProfileInfo from "../components/profile/ProfileInfo";
 import MyBlogs from "../components/blog/MyBlogs";
-
+import { useParams } from "react-router-dom";
+import { api } from "../api";
 
 const Profile = () => {
+    const { id } = useParams();
     const { state, dispatch } = useProfile();
-    const { api } = useAxios();
-    const { auth } = useAuth();
-
+    
     useEffect(() => {
         dispatch({ type: actions.profile.Data_Fetching });
 
         const fetchProfile = async () => {
             try {
-                const response = await api.get(`/profile/${auth?.user?.id}`);
+                const response = await api.get(`/profile/${id}`);
 
                 if (response.status === 200) {
                     dispatch({ type: actions.profile.Data_Fetched, data: response.data })
@@ -32,7 +30,7 @@ const Profile = () => {
         return () => {
             dispatch({ type: actions.profile.Clear_Data });
         };
-    }, [api, dispatch, auth?.user?.id]);
+    }, [dispatch, id]);
 
     if (state?.loading) {
         return <p>Fetching your profile data...</p>
