@@ -5,12 +5,18 @@ import { useProfile } from "../../hooks/useProfile";
 import useAxios from "../../hooks/useAxios";
 import { actions } from "../../actions";
 import { Bounce, toast } from "react-toastify";
+import { useAuth } from "../../hooks/useAuth";
 
 const ProfileBio = () => {
+    const {auth} = useAuth();
     const { state, dispatch } = useProfile();
     const { api } = useAxios();
     const [bio, setBio] = useState(state?.user?.bio);
     const [editMode, setEditMode] = useState(false);
+    
+    if(!bio){
+        setBio(auth?.user?.bio);
+    }
 
     const handleBioEdit = async () => {
         dispatch({ type: actions.profile.Data_Fetching });

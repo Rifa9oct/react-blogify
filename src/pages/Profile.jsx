@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useProfile } from "../hooks/useProfile";
 import { actions } from "../actions";
 import ProfileInfo from "../components/profile/ProfileInfo";
@@ -8,16 +7,17 @@ import { api } from "../api";
 import { useAuth } from "../hooks/useAuth";
 import SingleProfileInfo from "../components/SingleProfile/SingleProfileInfo";
 import SingleProfileBlogs from "../components/SingleProfile/SingleProfileBlogs";
+import { useQuery } from "@tanstack/react-query";
 
 const Profile = () => {
     const { auth } = useAuth();
     const { id } = useParams();
     const { state, dispatch } = useProfile();
-    const [profileInfo, setProfileInfo] = useState();
     const isMe = id === auth?.user?.id;
 
-    useEffect(() => {
-        const fetchProfile = async () => {
+    const { data: profileInfo, refetch } = useQuery({
+        queryKey: ['profileInfo'],
+        queryFn: async () => {
             try {
                 const response = await api.get(`/profile/${id}`);
 
@@ -25,26 +25,20 @@ const Profile = () => {
                     if (isMe) {
                         dispatch({ type: actions.profile.Data_Fetched, data: response.data })
                     } else {
-                        setProfileInfo(response.data);
+                        return response.data;
                     }
                 }
+                return null;
             } catch (error) {
                 console.error(error);
                 dispatch({ type: actions.profile.Data_Fetch_Error, error: error.message })
             }
         }
-        fetchProfile();
-
-        return () => {
-            dispatch({ type: actions.profile.Clear_Data });
-        };
-    }, [dispatch, id, isMe]);
+    })
 
     if (state?.loading) {
         return <p>Fetching your profile data...</p>
     }
-
-    // console.log(profileInfo)
 
     return (
         <div className="mx-auto max-w-[1020px] py-8">
