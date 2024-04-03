@@ -1,24 +1,32 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useProfile } from "../hooks/useProfile";
 import { actions } from "../actions";
 import ProfileInfo from "../components/profile/ProfileInfo";
 import MyBlogs from "../components/blog/MyBlogs";
 import { useParams } from "react-router-dom";
 import { api } from "../api";
+import { useAuth } from "../hooks/useAuth";
+import SingleProfileInfo from "../components/SingleProfile/SingleProfileInfo";
+import SingleProfileBlogs from "../components/SingleProfile/SingleProfileBlogs";
 
 const Profile = () => {
+    const { auth } = useAuth();
     const { id } = useParams();
     const { state, dispatch } = useProfile();
-    
-    useEffect(() => {
-        dispatch({ type: actions.profile.Data_Fetching });
+    const [profileInfo, setProfileInfo] = useState();
+    const isMe = id === auth?.user?.id;
 
+    useEffect(() => {
         const fetchProfile = async () => {
             try {
                 const response = await api.get(`/profile/${id}`);
 
                 if (response.status === 200) {
-                    dispatch({ type: actions.profile.Data_Fetched, data: response.data })
+                    if (isMe) {
+                        dispatch({ type: actions.profile.Data_Fetched, data: response.data })
+                    } else {
+                        setProfileInfo(response.data);
+                    }
                 }
             } catch (error) {
                 console.error(error);
@@ -30,16 +38,35 @@ const Profile = () => {
         return () => {
             dispatch({ type: actions.profile.Clear_Data });
         };
-    }, [dispatch, id]);
+    }, [dispatch, id, isMe]);
 
     if (state?.loading) {
         return <p>Fetching your profile data...</p>
     }
-    
+
+    // console.log(profileInfo)
+
     return (
         <div className="mx-auto max-w-[1020px] py-8">
-            <ProfileInfo />
-            <MyBlogs/>
+            {
+                isMe ? (
+                    <>
+                        <ProfileInfo />
+                        <MyBlogs />
+                    </>
+                ) : (
+                    <>
+                        {
+                            profileInfo && (
+                                <>
+                                    <SingleProfileInfo profileInfo={profileInfo} />
+                                    <SingleProfileBlogs profileInfo={profileInfo} />
+                                </>
+                            )
+                        }
+                    </>
+                )
+            }
         </div>
     );
 };

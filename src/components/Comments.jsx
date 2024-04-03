@@ -13,7 +13,6 @@ const Comments = ({ singleBlog, refetch }) => {
     const [commentValue, setCommentValue] = useState('');
 
     const currentUser = singleBlog?.comments.find( comment => comment.author.id === user?.id);
-    console.log(currentUser)
 
     const avatarSrc = user?.avatar ? `${import.meta.env.VITE_SERVER_BASE_URL}/uploads/avatar/${user?.avatar}` : null;
 
