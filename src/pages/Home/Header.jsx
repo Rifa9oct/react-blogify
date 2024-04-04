@@ -1,6 +1,6 @@
 import logo from "./../../assets/logo.svg"
 import search from "./../../assets/icons/search.svg"
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logout from "../../components/auth/Logout";
 import { useAuth } from "../../hooks/useAuth";
 import { useProfile } from "../../hooks/useProfile";
@@ -13,10 +13,18 @@ const Header = () => {
     const { state } = useProfile();
     const user = state?.user ?? auth?.user;
     const [showModal, setShowModal] = useState(false);
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const avatarSrc = user?.avatar ? `${import.meta.env.VITE_SERVER_BASE_URL}/uploads/avatar/${user?.avatar}` : null;
-
     const firstLetter = user?.firstName?.slice(0, 1);
+
+    const handleclick = () => {
+        if (location.pathname !== "/") {
+            navigate("/")
+        }
+        setShowModal(true)
+    }
 
     useEffect(() => {
         if (showModal) {
@@ -51,7 +59,7 @@ const Header = () => {
                                 <>
                                     {/* search */}
                                     <li>
-                                        <button onClick={() => setShowModal(true)} className="flex items-center gap-2 cursor-pointer">
+                                        <button onClick={handleclick} className="flex items-center gap-2 cursor-pointer">
                                             <img src={search} alt="Search" />
                                             <span>Search</span>
                                         </button>
