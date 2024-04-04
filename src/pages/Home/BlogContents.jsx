@@ -9,7 +9,6 @@ const BlogContents = () => {
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const loaderRef = useRef(null);
-    // console.log(state)
 
     useEffect(() => {
         const fetchblogs = async () => {

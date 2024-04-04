@@ -4,15 +4,31 @@ import { Link } from "react-router-dom";
 import Logout from "../../components/auth/Logout";
 import { useAuth } from "../../hooks/useAuth";
 import { useProfile } from "../../hooks/useProfile";
+import { useEffect, useState } from "react";
+import SearchModal from "../../components/SearchModal";
+import Portal from "../../utils/Portal";
 
 const Header = () => {
     const { auth } = useAuth();
     const { state } = useProfile();
-    const user = state?.user ?? auth?.user
-    
+    const user = state?.user ?? auth?.user;
+    const [showModal, setShowModal] = useState(false);
+
     const avatarSrc = user?.avatar ? `${import.meta.env.VITE_SERVER_BASE_URL}/uploads/avatar/${user?.avatar}` : null;
 
     const firstLetter = user?.firstName?.slice(0, 1);
+
+    useEffect(() => {
+        if (showModal) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, [showModal]);
 
     return (
         <header>
@@ -35,10 +51,10 @@ const Header = () => {
                                 <>
                                     {/* search */}
                                     <li>
-                                        <a href="./search.html" className="flex items-center gap-2 cursor-pointer">
+                                        <button onClick={() => setShowModal(true)} className="flex items-center gap-2 cursor-pointer">
                                             <img src={search} alt="Search" />
                                             <span>Search</span>
-                                        </a>
+                                        </button>
                                     </li>
                                     <li><Logout /></li>
 
@@ -68,6 +84,14 @@ const Header = () => {
                     </ul>
                 </div>
             </nav>
+
+            {
+                showModal && (
+                    <Portal>
+                        <SearchModal onClose={() => setShowModal(false)} />
+                    </Portal>
+                )
+            }
         </header >
     );
 };
