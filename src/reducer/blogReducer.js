@@ -9,7 +9,6 @@ const blogReducer = (state, action) => {
         case actions.blogs.Data_Fetched: {
             return {
                 ...state,
-                loading: false,
                 blogs: [...state.blogs, ...(action.data && action.data.blogs ? action.data.blogs : [])],
             };
         }

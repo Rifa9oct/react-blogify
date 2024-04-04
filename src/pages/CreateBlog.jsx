@@ -23,7 +23,6 @@ const CreateBlog = () => {
 
             const response = await api.post(`/blogs/`, formData);
             if (response.status === 201) {
-                console.log(response.data)
                 toast.success('Your blog created successfully!', {
                     position: "top-center",
                     autoClose: 3000,
@@ -41,6 +40,7 @@ const CreateBlog = () => {
             console.error(error)
         }
     }
+    
     return (
         <>
             <div className="container">

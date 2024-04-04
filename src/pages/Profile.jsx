@@ -46,7 +46,7 @@ const Profile = () => {
                 isMe ? (
                     <>
                         <ProfileInfo />
-                        <MyBlogs />
+                        <MyBlogs refetch={refetch}/>
                     </>
                 ) : (
                     <>

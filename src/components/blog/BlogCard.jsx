@@ -4,7 +4,7 @@ import { useAvatar } from "../../hooks/useAvatar";
 import { formatDate } from "../../utils/formatDate";
 import BlogAction from "./BlogAction";
 
-const BlogCard = ({ blog }) => {
+const BlogCard = ({ blog, refetch, setFilter, filter }) => {
     const { auth } = useAuth();
     const { avatarURL } = useAvatar(blog);
     const avatarSrc = avatarURL ? avatarURL : null
@@ -59,6 +59,9 @@ const BlogCard = ({ blog }) => {
                     isMe && (
                         <BlogAction
                             blogId={blog.id}
+                            refetch={refetch}
+                            setFilter={setFilter}
+                            filter={filter}
                         />
                     )
                 }
