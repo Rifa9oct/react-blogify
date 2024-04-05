@@ -8,7 +8,7 @@ import { useLocation } from "react-router-dom";
 import Portal from "../../utils/Portal";
 import EditBlog from "./EditBlog";
 
-const BlogAction = ({ blogId, refetch, setFilter, filter, updateBlog, setUpdateBlog }) => {
+const BlogAction = ({ blogId, refetch, setFilter, filter, updateBlog, setUpdateBlog, filterBlogs }) => {
     const [showAction, setShowAction] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const { api } = useAxios();
@@ -107,6 +107,7 @@ const BlogAction = ({ blogId, refetch, setFilter, filter, updateBlog, setUpdateB
                             setShowModal={setShowModal}
                             updateBlog={updateBlog}
                             setUpdateBlog={setUpdateBlog}
+                            filterBlogs={filterBlogs}
                         />
                     </Portal>
                 )

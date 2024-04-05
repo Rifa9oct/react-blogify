@@ -22,15 +22,14 @@ const FavouriteSidebar = () => {
 
     return (
         <>
-            {
-                favourites.length > 0 && (
-                    <div className="sidebar-card">
-                        <h3
-                            className="text-slate-300 text-xl lg:text-2xl font-semibold"
-                        >
-                            Your Favourites ❤️
-                        </h3>
-
+            <div className="sidebar-card">
+                <h3
+                    className="text-slate-300 text-xl lg:text-2xl font-semibold"
+                >
+                    Your Favourites ❤️
+                </h3>
+                {
+                    favourites.length > 0 ? (
                         <ul className="space-y-5 my-5">
                             {
                                 favourites.map(favourite => (
@@ -54,9 +53,12 @@ const FavouriteSidebar = () => {
                                 ))
                             }
                         </ul>
-                    </div>
-                )
-            }
+                    ) : (
+                        <h1 className="text-slate-400 font-medium my-6">You have no favourites blogs.</h1>
+                    )
+                }
+            </div>
+
         </>
     );
 };

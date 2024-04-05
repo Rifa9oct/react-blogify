@@ -6,11 +6,17 @@ import { MdError } from "react-icons/md";
 import close from "../../assets/icons/close.svg";
 import { useLocation } from "react-router-dom";
 
-const EditBlog = ({ blogId, onClose, refetch, setShowModal, updateBlog, setUpdateBlog }) => {
+const EditBlog = ({ blogId, onClose, refetch, setShowModal, updateBlog, setUpdateBlog, filterBlogs }) => {
     const { state } = useProfile();
     const { api } = useAxios();
     const location = useLocation();
-    const blog = state?.blogs.find(blog => blog.id === blogId);
+    let blogs;
+    if (state?.blogs.length > 0) {
+        blogs = state?.blogs;
+    } else {
+        blogs = filterBlogs;
+    }
+    const blog = blogs.find(blog => blog.id === blogId);
 
     const [formData, setFormData] = useState({
         title: blog?.title || "",
@@ -18,6 +24,7 @@ const EditBlog = ({ blogId, onClose, refetch, setShowModal, updateBlog, setUpdat
         content: blog?.content || "",
         thumbnail: null
     });
+
     const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
@@ -108,7 +115,7 @@ const EditBlog = ({ blogId, onClose, refetch, setShowModal, updateBlog, setUpdat
 
                     <div className="mb-6 mt-6">
                         <input
-                        className="w-full focus:ring-0 shadow-none border-none outline-none placeholder:text-xl text-3xl pl-0 font-bold bg-transparent appearance-none focus:border-none focus:outline-none"
+                            className="w-full focus:ring-0 shadow-none border-none outline-none placeholder:text-xl text-3xl pl-0 font-bold bg-transparent appearance-none focus:border-none focus:outline-none"
                             type="text"
                             id="title"
                             name="title"
@@ -121,7 +128,7 @@ const EditBlog = ({ blogId, onClose, refetch, setShowModal, updateBlog, setUpdat
 
                     <div className="mb-6">
                         <input
-                        className="w-full focus:ring-0 shadow-none border-none outline-none placeholder:text-xl text-3xl pl-0 font-bold bg-transparent appearance-none focus:border-none focus:outline-none"
+                            className="w-full focus:ring-0 shadow-none border-none outline-none placeholder:text-xl text-3xl pl-0 font-bold bg-transparent appearance-none focus:border-none focus:outline-none"
                             type="text"
                             id="tags"
                             name="tags"
@@ -134,7 +141,7 @@ const EditBlog = ({ blogId, onClose, refetch, setShowModal, updateBlog, setUpdat
 
                     <div className="cre mb-6 ">
                         <textarea
-                        className="w-full focus:ring-0 border-none outline-none placeholder:text-lg text-lg pl-0  bg-transparent appearance-none focus:border-none focus:outline-none"
+                            className="w-full focus:ring-0 border-none outline-none placeholder:text-lg text-lg pl-0  bg-transparent appearance-none focus:border-none focus:outline-none"
                             id="content"
                             name="content"
                             value={formData.content}

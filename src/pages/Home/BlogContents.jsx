@@ -21,7 +21,7 @@ const BlogContents = () => {
 
     if (updateBlog.state) {
         const editedBlog = updateBlog.blog;
-        const editedBlogs = state.blogs.map(blog =>
+        const editedBlogs = filterBlogs.map(blog =>
             blog.id === editedBlog.id ? editedBlog : blog
         );
         filterBlogs = editedBlogs;
@@ -39,6 +39,7 @@ const BlogContents = () => {
                             filter={filter}
                             updateBlog={updateBlog}
                             setUpdateBlog={setUpdateBlog}
+                            filterBlogs={filterBlogs}
                         />)
                 }
 
