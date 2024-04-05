@@ -10,7 +10,6 @@ const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { register, handleSubmit, formState: { errors }, setError } = useForm();
-   
 
     const onSubmit = async (data) => {
         try {
@@ -22,7 +21,6 @@ const Login = () => {
                     const authToken = token.accessToken;
                     const refreshToken = token.refreshToken;
 
-                    // console.log(`Login time auth token: ${authToken}`);
                     setAuth({ user, authToken, refreshToken });
                     navigate(location?.state ? location.state : "/")
                 }
