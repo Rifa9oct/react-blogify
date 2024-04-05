@@ -94,10 +94,10 @@ const EditBlog = ({ blogId, onClose, refetch, setShowModal, updateBlog, setUpdat
     return (
         <div className="fixed left-0 top-0 w-full h-full grid place-items-center bg-slate-800/50 backdrop-blur-sm z-50">
             <div className="relative w-[40%] mx-auto bg-slate-900 p-4 border border-slate-600/50 rounded-lg shadow-lg shadow-slate-400/10">
-                <form onSubmit={onSubmit} className="createBlog pt-5 w-[700px]">
+                <form onSubmit={onSubmit} className="p-5 m-0">
                     <div className="grid place-items-center bg-slate-600/20 h-[150px] rounded-md my-4">
                         <input
-                            className="ml-[300px] text-xs"
+                            className="ml-5"
                             id="file"
                             type="file"
                             name="thumbnail"
@@ -108,6 +108,7 @@ const EditBlog = ({ blogId, onClose, refetch, setShowModal, updateBlog, setUpdat
 
                     <div className="mb-6 mt-6">
                         <input
+                        className="w-full focus:ring-0 shadow-none border-none outline-none placeholder:text-xl text-3xl pl-0 font-bold bg-transparent appearance-none focus:border-none focus:outline-none"
                             type="text"
                             id="title"
                             name="title"
@@ -120,6 +121,7 @@ const EditBlog = ({ blogId, onClose, refetch, setShowModal, updateBlog, setUpdat
 
                     <div className="mb-6">
                         <input
+                        className="w-full focus:ring-0 shadow-none border-none outline-none placeholder:text-xl text-3xl pl-0 font-bold bg-transparent appearance-none focus:border-none focus:outline-none"
                             type="text"
                             id="tags"
                             name="tags"
@@ -130,8 +132,9 @@ const EditBlog = ({ blogId, onClose, refetch, setShowModal, updateBlog, setUpdat
                         {errors.tags && <span className="text-sm text-red-500"><MdError className="text-lg inline" /> {errors.tags}</span>}
                     </div>
 
-                    <div className="mb-6">
+                    <div className="cre mb-6 ">
                         <textarea
+                        className="w-full focus:ring-0 border-none outline-none placeholder:text-lg text-lg pl-0  bg-transparent appearance-none focus:border-none focus:outline-none"
                             id="content"
                             name="content"
                             value={formData.content}

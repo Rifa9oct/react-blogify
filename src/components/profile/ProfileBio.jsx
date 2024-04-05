@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import edit from "../../assets/icons/edit.svg";
 import check from "../../assets/icons/check.svg";
 import { useProfile } from "../../hooks/useProfile";
@@ -8,15 +8,17 @@ import { Bounce, toast } from "react-toastify";
 import { useAuth } from "../../hooks/useAuth";
 
 const ProfileBio = () => {
-    const {auth} = useAuth();
+    const { auth, setAuth } = useAuth();
     const { state, dispatch } = useProfile();
     const { api } = useAxios();
     const [bio, setBio] = useState(state?.user?.bio);
     const [editMode, setEditMode] = useState(false);
-    
-    if(!bio){
-        setBio(auth?.user?.bio);
-    }
+
+    useEffect(() => {
+        if (!bio) {
+            setBio(auth?.user?.bio);
+        }
+    }, [auth?.user?.bio, bio])
 
     const handleBioEdit = async () => {
         dispatch({ type: actions.profile.Data_Fetching });
@@ -27,6 +29,13 @@ const ProfileBio = () => {
                     type: actions.profile.User_Data_Edited,
                     data: response.data.user,
                 });
+                setAuth({
+                    ...auth,
+                    user:{
+                        ...auth?.user,
+                        bio: response.data.user.bio
+                    }
+                })
                 toast.success('Bio updated successfully!', {
                     position: "top-center",
                     autoClose: 3000,
@@ -37,7 +46,7 @@ const ProfileBio = () => {
                     progress: undefined,
                     theme: "colored",
                     transition: Bounce,
-                    });
+                });
             }
             setEditMode(false);
         } catch (error) {
