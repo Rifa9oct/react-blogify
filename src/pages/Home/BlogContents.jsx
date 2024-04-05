@@ -9,9 +9,22 @@ const BlogContents = () => {
         blogId: null
     });
 
+    const [updateBlog, setUpdateBlog] = useState({
+        state: false,
+        blog: null
+    });
+
     let filterBlogs = state?.blogs;
     if (filter.state) {
         filterBlogs = filterBlogs.filter(blog => blog.id !== filter.blogId)
+    }
+
+    if (updateBlog.state) {
+        const editedBlog = updateBlog.blog;
+        const editedBlogs = state.blogs.map(blog =>
+            blog.id === editedBlog.id ? editedBlog : blog
+        );
+        filterBlogs = editedBlogs;
     }
 
     return (
@@ -24,6 +37,8 @@ const BlogContents = () => {
                             blog={blog}
                             setFilter={setFilter}
                             filter={filter}
+                            updateBlog={updateBlog}
+                            setUpdateBlog={setUpdateBlog}
                         />)
                 }
 

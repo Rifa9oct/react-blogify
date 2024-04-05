@@ -5,11 +5,8 @@ import { useProfile } from "../../hooks/useProfile";
 import { MdError } from "react-icons/md";
 import close from "../../assets/icons/close.svg";
 import { useLocation } from "react-router-dom";
-import { actions } from "../../actions";
-import { useGetBlogs } from "../../hooks/useGetBlogs";
 
-const EditBlog = ({ blogId, onClose, refetch, setShowModal }) => {
-    const {dispatch} = useGetBlogs();
+const EditBlog = ({ blogId, onClose, refetch, setShowModal, updateBlog, setUpdateBlog }) => {
     const { state } = useProfile();
     const { api } = useAxios();
     const location = useLocation();
@@ -80,7 +77,11 @@ const EditBlog = ({ blogId, onClose, refetch, setShowModal }) => {
                 });
                 setShowModal(false);
                 if (location.pathname === "/") {
-                    dispatch({ type: actions.blogs.Data_Edited, data: response.data });
+                    setUpdateBlog({
+                        ...updateBlog,
+                        state: true,
+                        blog: response.data
+                    })
                 } else {
                     refetch();
                 }
