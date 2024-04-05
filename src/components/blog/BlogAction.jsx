@@ -1,15 +1,35 @@
 import dots from "../../assets/icons/3dots.svg";
 import edit from "../../assets/icons/edit.svg";
 import del from "../../assets/icons/delete.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Bounce, toast } from "react-toastify";
 import useAxios from "../../hooks/useAxios";
 import { useLocation } from "react-router-dom";
+import Portal from "../../utils/Portal";
+import EditBlog from "./EditBlog";
 
 const BlogAction = ({ blogId, refetch, setFilter, filter }) => {
     const [showAction, setShowAction] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const { api } = useAxios();
     const location = useLocation();
+
+    useEffect(() => {
+        if (showModal) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, [showModal]);
+
+    const handleclick = () => {
+        setShowModal(true);
+        setShowAction(false);
+    }
 
     const handleDelete = async () => {
         try {
@@ -55,7 +75,7 @@ const BlogAction = ({ blogId, refetch, setFilter, filter }) => {
             {
                 showAction && (
                     <div className="action-modal-container">
-                        <button
+                        <button onClick={handleclick}
                             className="action-menu-item hover:text-lwsGreen"
                         >
                             <img
@@ -75,6 +95,18 @@ const BlogAction = ({ blogId, refetch, setFilter, filter }) => {
                             Delete
                         </button>
                     </div>
+                )
+            }
+
+            {
+                showModal && (
+                    <Portal>
+                        <EditBlog onClose={() => setShowModal(false)}
+                            blogId={blogId}
+                            refetch={refetch}
+                            setShowModal={setShowModal}
+                        />
+                    </Portal>
                 )
             }
         </div>
