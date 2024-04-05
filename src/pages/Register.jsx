@@ -1,9 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import RegistrationFooter from "../components/RegistrationFooter";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+
 import { MdError } from "react-icons/md";
 import { Bounce, toast } from "react-toastify";
+import { api } from "../api";
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors }, setError } = useForm();
@@ -11,9 +12,10 @@ const Register = () => {
 
     const onSubmit = async (data) => {
         try {
-            const res = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}/auth/register`, data);
+            const res = await api.post(`/auth/register`, data);
 
             if (res.status === 201) {
+                console.log(res.data)
                 toast.success('Register successfully!', {
                     position: "top-center",
                     autoClose: 3000,

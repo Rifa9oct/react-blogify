@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const FavouriteSidebar = () => {
     const { auth } = useAuth();
     const { api } = useAxios();
-    const [favourites, setFavourites] = useState([]);
+    const [favourites, setFavourites] = useState(auth?.user?.favourites);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -23,7 +23,7 @@ const FavouriteSidebar = () => {
     return (
         <>
             {
-                auth?.user?.favourites.length > 0 && (
+                favourites.length > 0 && (
                     <div className="sidebar-card">
                         <h3
                             className="text-slate-300 text-xl lg:text-2xl font-semibold"

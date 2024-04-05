@@ -35,7 +35,7 @@ const Profile = () => {
             }
         }
     })
-
+   
     if (state?.loading) {
         return <p>Fetching your profile data...</p>
     }
@@ -46,7 +46,7 @@ const Profile = () => {
                 isMe ? (
                     <>
                         <ProfileInfo />
-                        <MyBlogs refetch={refetch}/>
+                        <MyBlogs refetch={refetch} />
                     </>
                 ) : (
                     <>
